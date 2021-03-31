@@ -1,0 +1,6 @@
+title FullStackOpen 0.4
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server->browser: 200 OK HTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: 200 OK main.css
