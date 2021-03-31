@@ -4,12 +4,16 @@ const Header = (props) => {
   return <h1>{props.course}</h1>;
 };
 
-const Content = (props) => {
+const Part = (props) => {
   return (
     <p>
       {props.part} {props.exercises}
     </p>
   );
+};
+
+const Content = (props) => {
+  return <Part part={props.part} exercises={props.exercises} />;
 };
 
 const Total = (props) => {
