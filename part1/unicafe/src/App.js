@@ -17,17 +17,21 @@ const Button = ({ name, handler }) => {
 };
 
 const Statistics = ({ good, neutral, bad }) => {
-  return (
-    <div>
-      <h1>Statistics</h1>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>All: {good + neutral + bad}</p>
-      <p>Average: {(good - bad) / (good + neutral + bad)}</p>
-      <p>Positive: {(good / (good + neutral + bad)) * 100}%</p>
-    </div>
-  );
+  if (good + neutral + bad === 0) {
+    return <div>No feedback given</div>;
+  } else {
+    return (
+      <div>
+        <h1>Statistics</h1>
+        <p>Good: {good}</p>
+        <p>Neutral: {neutral}</p>
+        <p>Bad: {bad}</p>
+        <p>All: {good + neutral + bad}</p>
+        <p>Average: {(good - bad) / (good + neutral + bad)}</p>
+        <p>Positive: {(good / (good + neutral + bad)) * 100}%</p>
+      </div>
+    );
+  }
 };
 
 const App = () => {
