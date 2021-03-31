@@ -1,0 +1,19 @@
+title FullStackOpen 0.5
+
+browser->server:HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server->browser:200 OK (content HTML)
+
+note over browser:HTML line 5 requires stylesheet download
+browser->server:HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser:200 OK (content main.css)
+
+note over browser:HTML line 6 requires script download
+browser->server:HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server->browser:200 OK (content spa.js)
+
+note over browser:browser executes spa.js, line 31 dispatches request built on line 30
+browser->server:HTTP GET ttps://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser:200 OK (content data.json)
+
+note over browser:event handler is called, in turn calling redrawNotes()
+note over browser:redrawNotes() renders note list to browser
