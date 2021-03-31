@@ -1,6 +1,30 @@
 title FullStackOpen 0.4
 
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
-server->browser: 200 OK HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server->browser: 200 OK main.css
+note over browser:user selects form input "note" and enters text
+note over browser:user presses Submit button
+
+browser->server:HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+note over server:server appends new object to data.json\ncontaining submitted form data
+note over server:server redirects browser to original\npage once processed
+server->browser:302 Found /exampleapp/notes
+
+note over browser:browser is redirected
+browser->server:HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server->browser:304 Not Modified (content notes HTML)
+
+note over browser:browser uses cached HTML resource
+note over browser:cached HTML line 5 requires stylesheet download
+browser->server:HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser:200 OK (content main.css)
+
+note over browser:HTML line 6 requires JS download
+browser->server:HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server->browser:304 Not Modified
+
+note over browser:execute main.js, line 23 dispatches request built on line 22
+browser->server:HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser:200 OK (content data.json with new entry)
+
+note over browser:event handler on line 3 of JS executes
+note over browser:renders list of all notes from data.json
+note over browser:user sees their newly submitted entry at bottom of list
