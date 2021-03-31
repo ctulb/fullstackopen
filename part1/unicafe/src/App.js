@@ -16,6 +16,14 @@ const Button = ({ name, handler }) => {
   );
 };
 
+const Statistic = ({ text, value }) => {
+  return (
+    <p>
+      {text}: {value}
+    </p>
+  );
+};
+
 const Statistics = ({ good, neutral, bad }) => {
   if (good + neutral + bad === 0) {
     return <div>No feedback given</div>;
@@ -23,12 +31,18 @@ const Statistics = ({ good, neutral, bad }) => {
     return (
       <div>
         <h1>Statistics</h1>
-        <p>Good: {good}</p>
-        <p>Neutral: {neutral}</p>
-        <p>Bad: {bad}</p>
-        <p>All: {good + neutral + bad}</p>
-        <p>Average: {(good - bad) / (good + neutral + bad)}</p>
-        <p>Positive: {(good / (good + neutral + bad)) * 100}%</p>
+        <Statistic text="good" value={good} />
+        <Statistic text="neutral" value={neutral} />
+        <Statistic text="bad" value={bad} />
+        <Statistic text="all" value={good + neutral + bad} />
+        <Statistic
+          text="average"
+          value={(good - bad) / (good + neutral + bad)}
+        />
+        <Statistic
+          text="positive"
+          value={(good / (good + neutral + bad)) * 100 + '%'}
+        />
       </div>
     );
   }
