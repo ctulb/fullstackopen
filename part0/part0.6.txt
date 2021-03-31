@@ -1,0 +1,17 @@
+title FullStackOpen 0.6
+
+note over browser:user selects form input "note" and enters text
+note over browser:user presses Submit button
+
+note over browser:form.onsubmit event handler triggers
+note over browser:default submission behaviour is prevented
+note over browser:browser creates new note object and appends to local notes object
+note over browser:form input is reset to blank
+note over browser:redrawNotes() renders updated note list to browser
+note over browser:user sees their newly submitted entry at bottom of list
+note over browser:sendtoServer(note) sends POST to server with form submission
+
+browser->server:HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over server:server appends new object to data.json\ncontaining submitted form data
+note over server:server appends new object to data.json\ncontaining submitted form data
+server->browser:201 Created
