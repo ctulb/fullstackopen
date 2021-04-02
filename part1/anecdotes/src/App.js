@@ -10,6 +10,17 @@ const Button = ({ name, handler }) => {
   );
 };
 
+const MostVoted = ({ anecdote }) => {
+  if (Object.keys(anecdote).length === 0) return null;
+  return (
+    <div>
+      <h1>Anecdote with Most Votes</h1>
+      <p>{anecdote.text}</p>
+      <p>has {anecdote.votes} votes</p>
+    </div>
+  );
+};
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -29,6 +40,8 @@ const App = () => {
 
   const [votes, setVotes] = useState(voteArray);
 
+  const [favourite, setFavourite] = useState({});
+
   const handleNextAnecdoteClick = () => {
     const rand = Math.random();
     const randSelect = rand * anecdotes.length;
@@ -38,6 +51,12 @@ const App = () => {
   const handleVoteClick = () => {
     const newVotes = [...votes];
     newVotes[selected] += 1;
+    if (newVotes[selected] > Math.max(...votes)) {
+      setFavourite({
+        text: anecdotes[selected],
+        votes: newVotes[selected],
+      });
+    }
     setVotes(newVotes);
   };
 
@@ -47,6 +66,7 @@ const App = () => {
       <p>has {votes[selected]} votes</p>
       <Button name="Vote" handler={handleVoteClick} />
       <Button name="Next Anecdote" handler={handleNextAnecdoteClick} />
+      <MostVoted anecdote={favourite} />
     </>
   );
 };
