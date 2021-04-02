@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', phoneNumber: '01234 567890' },
+    { name: 'Michael Jordan', phoneNumber: '09876 543210' },
+    { name: 'Michael Jackson', phoneNumber: '01357 913579' },
+    { name: 'Johnny Davidson', phoneNumber: '02468 024680' },
   ]);
   const [newName, setNewName] = useState('');
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
