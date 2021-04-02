@@ -22,16 +22,31 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
 
-  const handleClick = () => {
+  const voteArray = Array.apply(null, new Array(anecdotes.length)).map(
+    Number.prototype.valueOf,
+    0
+  );
+
+  const [votes, setVotes] = useState(voteArray);
+
+  const handleNextAnecdoteClick = () => {
     const rand = Math.random();
     const randSelect = rand * anecdotes.length;
     setSelected(Math.floor(randSelect));
   };
 
+  const handleVoteClick = () => {
+    const newVotes = [...votes];
+    newVotes[selected] += 1;
+    setVotes(newVotes);
+  };
+
   return (
     <>
       <div>{anecdotes[selected]}</div>
-      <Button name="Next Anecdote" handler={handleClick} />
+      <p>has {votes[selected]} votes</p>
+      <Button name="Vote" handler={handleVoteClick} />
+      <Button name="Next Anecdote" handler={handleNextAnecdoteClick} />
     </>
   );
 };
