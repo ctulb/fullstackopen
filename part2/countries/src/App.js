@@ -28,7 +28,10 @@ function App() {
         countries={countries}
         setFilteredCountries={setFilteredCountries}
       />
-      <CountryList filteredCountries={filteredCountries} />
+      <CountryList
+        setFilteredCountries={setFilteredCountries}
+        filteredCountries={filteredCountries}
+      />
     </div>
   );
 }
