@@ -18,7 +18,11 @@ const CountryList = ({ filteredCountries, setFilteredCountries }) => {
           {filteredCountries.map((country) => (
             <li id={country.alpha3Code}>
               {country.name}
-              <button name={country.name} onClick={handleShowClick}>
+              <button
+                id={country.alpha3Code}
+                name={country.name}
+                onClick={handleShowClick}
+              >
                 Show
               </button>
             </li>
