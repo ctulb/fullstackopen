@@ -16,24 +16,9 @@
       "id": 3
     },
     {
-      "name": "Mary Poppendieck",
-      "phoneNumber": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "name": "Michael Jordan",
-      "phoneNumber": "01234567890",
-      "id": 5
-    },
-    {
       "name": "Morris",
       "phoneNumber": "0214396734",
       "id": 6
-    },
-    {
-      "name": "Bananaman",
-      "phoneNumber": "010238637",
-      "id": 7
     }
   ]
 }

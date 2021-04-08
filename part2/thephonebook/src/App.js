@@ -38,6 +38,22 @@ const App = () => {
     });
   };
 
+  const handleDelete = (event) => {
+    if (window.confirm(`Delete ${event.target.name}?`)) {
+      const personToDelete = persons.filter(
+        (person) => person.name === event.target.name
+      );
+      console.log(personToDelete);
+      personService.remove(personToDelete[0].id).then((response) => {
+        const newPersons = persons.filter(
+          (person) => person.name !== event.target.name
+        );
+        setPersons(newPersons);
+        setPersonsToShow(newPersons);
+      });
+    }
+  };
+
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -81,7 +97,7 @@ const App = () => {
         handleAdd={handleAdd}
       />
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} handleDelete={handleDelete} />
     </div>
   );
 };
