@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.error {
+  color: red;
+  background-color: grey;
+  border: 10px solid red;
+  border-radius: 4px;
+}
+
+.success {
+  color: green;
+  background-color: grey;
+  border: 10px solid green;
+  border-radius: 4px;
+}
