@@ -19,8 +19,27 @@ const App = () => {
       name: newName,
       phoneNumber: newPhoneNumber,
     };
-    if (persons.filter((person) => person.name === newName).length) {
-      alert(`${newName} has already been added to the phonebook`);
+    const personSearch = persons.filter((person) => person.name === newName);
+    if (personSearch.length) {
+      if (
+        window.confirm(
+          `${newName} has already been added to the phonebook. Update number?`
+        )
+      ) {
+        // find where the person is in the persons array
+        const personIndex = persons.findIndex(
+          (person) => person.name === newName
+        );
+        // go and update on the backend
+        personService.update(persons[personIndex].id, newPerson);
+        // create a copy of persons so we don't update state directly
+        const newPersons = persons;
+        // update the local state phone number of person
+        newPersons[personIndex].phoneNumber = newPhoneNumber;
+        // refresh persons and personsToShow with new array
+        setPersons(newPersons);
+        setPersonsToShow(newPersons);
+      }
       setNewName('');
       setNewPhoneNumber('');
       return;
