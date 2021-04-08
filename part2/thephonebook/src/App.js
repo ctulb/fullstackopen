@@ -24,14 +24,17 @@ const App = () => {
       setNewPhoneNumber('');
       return;
     }
-    const newPersons = persons.concat(newPerson);
-    setPersons(newPersons);
-    setNewName('');
-    setNewPhoneNumber('');
-    const personsToShow = newPersons.filter((person) =>
-      person.name.toLowerCase().includes(searchFilter.toLowerCase())
-    );
-    setPersonsToShow(personsToShow);
+    var newPersons = [];
+    axios.post('http://localhost:3001/persons', newPerson).then((response) => {
+      newPersons = persons.concat(response.data);
+      setPersons(newPersons);
+      setNewName('');
+      setNewPhoneNumber('');
+      const personsToShow = newPersons.filter((person) =>
+        person.name.toLowerCase().includes(searchFilter.toLowerCase())
+      );
+      setPersonsToShow(personsToShow);
+    });
   };
 
   const handleNameChange = (event) => {
