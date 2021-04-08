@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import Notification from './components/Notification';
 
 import personService from './services/persons';
 
@@ -12,6 +13,8 @@ const App = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
   const [searchFilter, setSearchFilter] = useState('');
   const [personsToShow, setPersonsToShow] = useState(persons);
+  const [notificationMessage, setNotificationMessage] = useState(null);
+  const [notificationMessageType, setNotificationMessageType] = useState(null);
 
   const handleAdd = (event) => {
     event.preventDefault();
@@ -42,6 +45,12 @@ const App = () => {
       }
       setNewName('');
       setNewPhoneNumber('');
+      setNotificationMessage(`${newName} updated successfully`);
+      setNotificationMessageType('success');
+      window.setTimeout(() => {
+        setNotificationMessage(null);
+        setNotificationMessageType(null);
+      }, 5000);
       return;
     }
     var newPersons = [];
@@ -54,6 +63,12 @@ const App = () => {
         person.name.toLowerCase().includes(searchFilter.toLowerCase())
       );
       setPersonsToShow(personsToShow);
+      setNotificationMessage(`${newName} created successfully`);
+      setNotificationMessageType('success');
+      window.setTimeout(() => {
+        setNotificationMessage(null);
+        setNotificationMessageType(null);
+      }, 5000);
     });
   };
 
@@ -63,13 +78,25 @@ const App = () => {
         (person) => person.name === event.target.name
       );
       console.log(personToDelete);
-      personService.remove(personToDelete[0].id).then((response) => {
-        const newPersons = persons.filter(
-          (person) => person.name !== event.target.name
-        );
-        setPersons(newPersons);
-        setPersonsToShow(newPersons);
-      });
+      personService
+        .remove(personToDelete[0].id)
+        .then((response) => {
+          const newPersons = persons.filter(
+            (person) => person.name !== event.target.name
+          );
+          setPersons(newPersons);
+          setPersonsToShow(newPersons);
+          setNotificationMessage(`${event.target.name} deleted successfully`);
+          setNotificationMessageType('success');
+          window.setTimeout(() => {
+            setNotificationMessage(null);
+            setNotificationMessageType(null);
+          }, 5000);
+        })
+        .catch((reason) => {
+          setNotificationMessage(reason);
+          setNotificationMessageType('error');
+        });
     }
   };
 
@@ -102,6 +129,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification
+        message={notificationMessage}
+        messageType={notificationMessageType}
+      />
       <Filter
         searchFilter={searchFilter}
         handleSearchFilterChange={handleSearchFilterChange}
