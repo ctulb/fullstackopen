@@ -83,7 +83,6 @@ const App = () => {
       const personToDelete = persons.filter(
         (person) => person.name === event.target.name
       );
-      console.log(personToDelete);
       personService
         .remove(personToDelete[0].id)
         .then((response) => {
