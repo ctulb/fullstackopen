@@ -54,22 +54,28 @@ const App = () => {
       return;
     }
     var newPersons = [];
-    personService.create(newPerson).then((response) => {
-      newPersons = persons.concat(response.data);
-      setPersons(newPersons);
-      setNewName('');
-      setNewPhoneNumber('');
-      const personsToShow = newPersons.filter((person) =>
-        person.name.toLowerCase().includes(searchFilter.toLowerCase())
-      );
-      setPersonsToShow(personsToShow);
-      setNotificationMessage(`${newName} created successfully`);
-      setNotificationMessageType('success');
-      window.setTimeout(() => {
-        setNotificationMessage(null);
-        setNotificationMessageType(null);
-      }, 5000);
-    });
+    personService
+      .create(newPerson)
+      .then((response) => {
+        newPersons = persons.concat(response.data);
+        setPersons(newPersons);
+        setNewName('');
+        setNewPhoneNumber('');
+        const personsToShow = newPersons.filter((person) =>
+          person.name.toLowerCase().includes(searchFilter.toLowerCase())
+        );
+        setPersonsToShow(personsToShow);
+        setNotificationMessage(`${newName} created successfully`);
+        setNotificationMessageType('success');
+        window.setTimeout(() => {
+          setNotificationMessage(null);
+          setNotificationMessageType(null);
+        }, 5000);
+      })
+      .catch((error) => {
+        setNotificationMessage(`Error: ${error.response.data.error.message}`);
+        setNotificationMessageType('error');
+      });
   };
 
   const handleDelete = (event) => {
