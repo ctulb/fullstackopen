@@ -26,8 +26,13 @@ const favouriteBlog = (blogs) => {
   };
 };
 
+const mostBlogs = (blogs) => {
+  return null;
+};
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
+  mostBlogs,
 };
