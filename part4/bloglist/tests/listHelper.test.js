@@ -256,7 +256,7 @@ describe('most blogs tests', () => {
     });
   });
   test('when list has multiple blogs, equals the one with most likes', () => {
-    const result = listHelper.favouriteBlog(listWithMultipleBlogs);
+    const result = listHelper.mostBlogs(listWithMultipleBlogs);
     expect(result).toEqual({
       author: 'Robert C. Martin',
       blogs: 3,
