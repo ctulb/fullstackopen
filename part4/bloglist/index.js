@@ -1,9 +1,10 @@
-require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+
+const config = require('./utils/config');
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -14,7 +15,12 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema);
 
-const mongoUrl = process.env.MONGODB_CONNECTION_STRING;
+const mongoUrl = config.MONGODB_CONNECTION_STRING;
+if (!mongoUrl) {
+  console.error('MongoDB connection string not defined');
+  process.exit(1);
+}
+
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
