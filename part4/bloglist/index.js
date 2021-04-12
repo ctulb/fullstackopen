@@ -1,17 +1,11 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
+const app = require('./app');
+const http = require('http');
 
-const blogRouter = require('./controllers/blogs');
-
+const config = require('./utils/config');
 const logger = require('./utils/logger');
 
-app.use(cors());
-app.use(express.json());
+const server = http.createServer(app);
 
-app.use('/api/blogs', blogRouter);
-
-const PORT = 3003;
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
+server.listen(config.PORT, () => {
+  logger.info(`Server running on port ${config.PORT}`);
 });
