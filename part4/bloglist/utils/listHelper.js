@@ -44,9 +44,39 @@ const mostBlogs = (blogs) => {
   };
 };
 
+const mostLikes = (blogs) => {
+  if (blogs.length === 0) {
+    return {};
+  }
+
+  const summaryData = [];
+
+  blogs.map((blog) => {
+    const index = summaryData.findIndex(
+      (element) => element.author === blog.author
+    );
+    if (index === -1) {
+      summaryData.push({ author: blog.author, likes: blog.likes });
+    } else {
+      summaryData[index].likes += blog.likes;
+    }
+  });
+
+  const sorted = _.chain(summaryData)
+    .sortBy((blog) => {
+      return blog.likes;
+    })
+    .reverse()
+    .head()
+    .value();
+
+  return sorted;
+};
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
   mostBlogs,
+  mostLikes,
 };
