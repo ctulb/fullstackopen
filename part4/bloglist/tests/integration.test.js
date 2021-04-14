@@ -102,6 +102,17 @@ describe('test POST', () => {
     expect(response.body.url).toBe(newBlog.url);
     expect(response.body.likes).toBe(newBlog.likes);
   });
+  it('POST with missing likes should add a blog with likes 0 to the database', async () => {
+    const newBlog = {
+      title: 'Marmite is Great',
+      author: 'A. N. Idiot',
+      url: 'https://noone.agrees',
+    };
+    const response = await api.post('/api/blogs').send(newBlog);
+    expect(response.statusCode).toBe(201);
+    expect(response.body.likes).toBeDefined();
+    expect(response.body.likes).toBe(0);
+  });
   afterAll(() => {
     mongoose.connection.close();
   });
