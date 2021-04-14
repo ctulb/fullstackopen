@@ -36,4 +36,25 @@ blogRouter.delete('/:id', async (request, response, next) => {
   }
 });
 
+blogRouter.patch('/:id', async (request, response, next) => {
+  try {
+    const document = await Blog.findByIdAndUpdate(
+      request.params.id,
+      request.body,
+      {
+        new: true,
+      }
+    );
+    if (!document) {
+      response.sendStatus(404);
+    } else {
+      response.status(200).json(document);
+    }
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return response.sendStatus(404);
+    } else next(error);
+  }
+});
+
 module.exports = blogRouter;

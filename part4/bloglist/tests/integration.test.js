@@ -155,3 +155,34 @@ describe('test DELETE', () => {
     mongoose.connection.close();
   });
 });
+
+describe('test PATCH', () => {
+  beforeAll(async () => {
+    await Blog.deleteMany({});
+    await Blog.create(testBlogs[0]);
+  });
+  it('PATCH updates a post in database', async () => {
+    const postToUpdate = await api.get('/api/blogs');
+    const idToUpdate = postToUpdate.body[0].id;
+    const updatedBlog = {
+      title: 'Milk Chocolate Hobnobs',
+      author: 'Crunchy McBiscuits',
+      likes: 356,
+    };
+    const response = await api
+      .patch(`/api/blogs/${idToUpdate}`)
+      .send(updatedBlog);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.id).toBe(idToUpdate);
+    expect(response.body.title).toBe(updatedBlog.title);
+    expect(response.body.author).toBe(updatedBlog.author);
+    expect(response.body.likes).toBe(updatedBlog.likes);
+  });
+  it('PATCH returns 404 for an unknown ID', async () => {
+    const response = await api.patch(`/api/blogs/1234567890`);
+    expect(response.statusCode).toBe(404);
+  });
+  afterAll(() => {
+    mongoose.connection.close();
+  });
+});
