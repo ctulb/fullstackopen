@@ -21,4 +21,19 @@ blogRouter.post('', async (request, response) => {
   response.status(201).json(result);
 });
 
+blogRouter.delete('/:id', async (request, response, next) => {
+  try {
+    const document = await Blog.findByIdAndDelete(request.params.id);
+    if (!document) {
+      response.sendStatus(404);
+    } else {
+      response.sendStatus(204);
+    }
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return response.sendStatus(404);
+    } else next(error);
+  }
+});
+
 module.exports = blogRouter;

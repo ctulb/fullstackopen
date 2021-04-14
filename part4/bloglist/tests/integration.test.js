@@ -133,3 +133,25 @@ describe('test POST', () => {
     mongoose.connection.close();
   });
 });
+
+describe('test DELETE', () => {
+  beforeAll(async () => {
+    await Blog.deleteMany({});
+    await Blog.create(testBlogs[0]);
+  });
+  it('DELETE removes post from database', async () => {
+    const postToDelete = await api.get('/api/blogs');
+    const idToDelete = postToDelete.body[0].id;
+    const response = await api.delete(`/api/blogs/${idToDelete}`);
+    const length = await Blog.countDocuments({});
+    expect(response.statusCode).toBe(204);
+    expect(length).toBe(0);
+  });
+  it('DELETE returns 404 for an unknown ID', async () => {
+    const response = await api.delete(`/api/blogs/1234567890`);
+    expect(response.statusCode).toBe(404);
+  });
+  afterAll(() => {
+    mongoose.connection.close();
+  });
+});
