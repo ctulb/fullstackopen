@@ -78,3 +78,31 @@ describe('populated GET', () => {
     mongoose.connection.close();
   });
 });
+
+describe('test POST', () => {
+  beforeAll(async () => {
+    await Blog.deleteMany({});
+    await Blog.create(testBlogs);
+  });
+  it('POST /api/blog should add a blog to the database', async () => {
+    const newBlog = {
+      title: 'I Really Love Bananas',
+      author: 'Aiai',
+      url: 'https://www.supermonkeyball.com',
+      likes: 999,
+    };
+    const oldLength = await Blog.countDocuments({});
+    const response = await api.post('/api/blogs').send(newBlog);
+    const newLength = await Blog.countDocuments({});
+    expect(newLength).toBe(oldLength + 1);
+    expect(response.statusCode).toBe(201);
+    expect(response.body.id).toBeDefined();
+    expect(response.body.title).toBe(newBlog.title);
+    expect(response.body.author).toBe(newBlog.author);
+    expect(response.body.url).toBe(newBlog.url);
+    expect(response.body.likes).toBe(newBlog.likes);
+  });
+  afterAll(() => {
+    mongoose.connection.close();
+  });
+});
