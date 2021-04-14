@@ -113,6 +113,22 @@ describe('test POST', () => {
     expect(response.body.likes).toBeDefined();
     expect(response.body.likes).toBe(0);
   });
+  it('POST with missing title returns 400 Bad Request error', async () => {
+    const newBlog = {
+      author: 'F. O. Rgottitle',
+      url: 'https://oopsiforgotmytitle.com',
+    };
+    const response = await api.post('/api/blogs').send(newBlog);
+    expect(response.statusCode).toBe(400);
+  });
+  it('POST with missing title returns 400 Bad Request error', async () => {
+    const newBlog = {
+      title: 'I Forgot My Name',
+      url: 'https://oopsiforgotmyname.com',
+    };
+    const response = await api.post('/api/blogs').send(newBlog);
+    expect(response.statusCode).toBe(400);
+  });
   afterAll(() => {
     mongoose.connection.close();
   });
